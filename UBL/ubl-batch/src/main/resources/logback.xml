@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d [%thread] %-5level %logger{35} - %msg %n
+			</pattern>
+		</encoder>
+	</appender>
+	<appender name="rollingCoreLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	<level>DEBUG</level>
+	</filter>
+	
+	  <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	    <fileNamePattern>../logs/bl-error.%d{yyyy-MM-dd-HH}.%i.log</fileNamePattern>
+	    <maxHistory>1512</maxHistory>
+	    <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+	      <maxFileSize>10MB</maxFileSize>
+	    </timeBasedFileNamingAndTriggeringPolicy>
+	  </rollingPolicy>
+	  <encoder>
+	<charset>UTF-8</charset>
+	<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+	</encoder>
+	  <prudent>true</prudent>
+	</appender>
+
+
+
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+	<level>DEBUG</level>
+	</filter>
+	<File>../logs/bl-error.batch.log</File>
+	
+	<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+	
+	<FileNamePattern>
+	../logs/bl-error.${logback.appname}.%d{yyyy-MM-dd-HH}.log
+	</FileNamePattern>
+	
+	<maxHistory>90</maxHistory>
+	
+	</rollingPolicy>
+	<encoder>
+	<pattern>%d [%thread] %-5level %logger{36} %line - %msg%n</pattern>
+	</encoder>
+	</appender>
+	
+	<root level="info">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="rollingCoreLog"/>
+	</root>
+
+	<logger name="com.foyatech.hgb.dao" level="DEBUG" />
+	
+
+
+</configuration>

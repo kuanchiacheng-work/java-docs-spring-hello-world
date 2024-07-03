@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<SYNC_DATA xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <HEADER actvCode="NEW_CUSTOMER" exeDate="2018-10-21T18:04:18" effDate="2018-10-01T12:00:00" trxId="8690" routeId="5701000526" entityId="5701000526" entityType="C" category=""/>
+    <DATA>
+        <transactionInfo>
+            <trxId>8690</trxId>
+            <svcCode>01</svcCode>
+            <actvCode>NEW_CUSTOMER</actvCode>
+            <activityReason>CREQ</activityReason>
+            <exeDate>2018-10-21T18:04:18</exeDate>
+            <effDate>2018-10-01T12:00:00</effDate>
+            <chargeCode xsi:nil="true"/>
+            <waiveIndicator xsi:nil="true"/>
+        </transactionInfo>
+        <authInfo>
+            <bpid>1009</bpid>
+            <channel>200113613</channel>
+            <apUser>FY_USER</apUser>
+            <transApUser>FY_USER</transApUser>
+            <transChannelId>200113613</transChannelId>
+        </authInfo>
+        <newCustomer>
+            <customer>
+                <customerContext>
+                    <beId>110154</beId>
+                    <customerId>5701000526</customerId>
+                    <externalId xsi:nil="true"/>
+                </customerContext>
+                <customerInfo>
+                    <custType>D</custType>
+                    <custSubType>B</custSubType>
+                    <effDate>2018-10-01T12:00:00</effDate>
+                    <endDate xsi:nil="true"/>
+                    <cycleInfo>
+                        <cycle>52</cycle>
+                        <newCycle xsi:nil="true"/>
+                        <updateCycleDate xsi:nil="true"/>
+                    </cycleInfo>
+                </customerInfo>
+                <attributeParamInfoList xsi:nil="true"/>
+                <profileNameInfoList xsi:nil="true"/>
+                <profileAddrInfoList xsi:nil="true"/>
+            </customer>            
+        </newCustomer>
+    </DATA>
+</SYNC_DATA>
