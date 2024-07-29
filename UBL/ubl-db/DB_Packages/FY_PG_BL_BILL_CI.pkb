@@ -917,6 +917,7 @@ CREATE OR REPLACE PACKAGE BODY HGBBLAPPO.FY_PG_BL_BILL_CI IS
             --AND NVL(AP.END_DATE, gdBILL_FROM_DATE+1)>gdBILL_FROM_DATE
             --AND ((NVL (ap.end_date, gdBILL_FROM_DATE+ 1)>gdBILL_FROM_DATE AND pr.payment_timing = 'R') OR (pr.payment_timing = 'D'))  --2019/12/31 MODIFY 預收計算起訖時間、預收suspend天數計算
             AND ((NVL (ap.end_date, gdBILL_FROM_DATE+ 1)>gdBILL_FROM_DATE AND pr.payment_timing = 'R') OR (NVL(ap.cur_billed,gdBILL_END_DATE) > ap.end_date AND ap.end_rsn = 'DFC' AND pr.payment_timing = 'R') OR ((NVL(ap.cur_billed,gdBILL_FROM_DATE) <> gdBILL_END_DATE OR NVL(ap.END_RSN,' ') IN ('DFC','CS1','CS2','CS3','CS4','CS5','CS6','CS7','CS8','CS9','CSZ')) AND pr.payment_timing = 'D') OR ((NVL(ap.cur_billed,gdBILL_FROM_DATE) = gdBILL_END_DATE AND PR.FREQUENCY = 1) AND pr.payment_timing = 'D'))  --2019/12/31 MODIFY 預收計算起訖時間、預收suspend天數計算 --2023/04/06 MODIFY FOR SR250171_ESDP_Migration_Project_Migration_重開月底最後一天落下月出帳與新增/修改此段DBMS --2023/07/25 MODIFY FOR SR250171_ESDP_Migration_Project_Migration_月繳前收次期帳單不受已出帳至BILL_END_DATE限制 --2023/10/11 MODIFY FOR SR260229_Project-M Fixed line Phase 1.1，後收DFC退款
+            AND (AP.OFFER_LEVEL <> 'S' OR EXISTS (SELECT 1 FROM fy_tb_bl_bill_sub WHERE acct_id = AP.acct_id and subscr_id = AP.offer_level_id AND bill_seq = gnBILL_SEQ AND cycle = gnCYCLE AND cycle_month = gnCYCLE_MONTH)) --2024/06/27 MODIFY FOR SR261173_#5385 Home grown CMP project -Phase1，修正ACCT_PKG需參考出帳SUB名單
             AND AP.STATUS<>'CLOSE'
           ORDER BY PKG_ID;
 

@@ -48,6 +48,7 @@ CREATE OR REPLACE PACKAGE HGBBLAPPO.FY_PG_BL_BILL_CI IS
       --             5.7    2023/10/16 MODIFY FOR SR260229_Project-M Fixed line Phase 1.1，後收DFC退款
       --             5.8    2023/12/28 MODIFY FOR SR260229_Project-M Fixed line Phase 1.1，後收DFC退款，DFC忽略當天安裝當天移除
       --             5.9    2024/04/16 MODIFY FOR SR266082_ICT專案，折扣不折抵負項金額
+      --             6.0    2024/06/27 MODIFY FOR SR261173_#5385 Home grown CMP project -Phase1，修正ACCT_PKG需參考出帳SUB名單
    */
    --記錄PKG多皆費率
    TYPE Pkg_rates_Rec IS RECORD(
