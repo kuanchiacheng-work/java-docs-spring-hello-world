@@ -10,13 +10,14 @@ SELECT 'PARF' parf, RPAD (TRIM (ba.acct_id), 12, ' ') billing_arrangement_id,
        fet1_refund_request,
        fet1_account,
        fet1_payment
- WHERE ba.bill_seq =  ${billSeq}
-   AND ba.bill_seq = bc.bill_seq
+ WHERE 
+   --ba.bill_seq =  ${billSeq} AND --SR260229_Project-M Fixed line Phase I
+   ba.bill_seq = bc.bill_seq
    AND BA.CYCLE = BC.CYCLE
    AND BA.CYCLE_MONTH = BC.CYCLE_MONTH 
    AND ba.bill_status = 'MA'
    AND ba.bill_seq = fet1_payment.bill_seq_no
-   AND ba.bill_seq = fet1_payment_activity.bill_seq_no
+   --AND ba.bill_seq = fet1_payment_activity.bill_seq_no --SR260229_Project-M Fixed line Phase I
    AND ba.acct_id = fet1_account.account_id
    AND fet1_account.partition_id = fet1_refund_request.partition_id
    AND fet1_account.account_id = fet1_refund_request.account_id

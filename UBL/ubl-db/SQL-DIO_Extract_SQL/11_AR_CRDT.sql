@@ -12,7 +12,17 @@ SELECT
     RPAD(trim(CC.L9_SERVICE_RECEIVER_TYPE),1,' ') L9_SERVICE_RECEIVER_TYPE, 
     RPAD(trim(CC.L9_SERVICE_RECEIVER_ID),12,' ') L9_SERVICE_RECEIVER_ID, 
     RPAD(trim(DECODE(NVL(CC.INVOICE_ID,0),0,CC.TRANSACTION_ID,CC.INVOICE_ID)),12,' ') INVOICE_ID, 
-    RPAD(trim(PCC.TAX_RATE),6,' ') TAX_CODE 
+    --RPAD(trim(PCC.TAX_RATE),6,' ') TAX_CODE 
+        DECODE(
+        (SELECT COUNT(*) 
+         FROM fy_Tb_cm_attribute_param 
+         WHERE entity_type = 'A' 
+           AND attribute_name = 'CHANGE_ZERO_TAX' 
+           AND attribute_value = 'Y'
+           AND entity_id = mast.acct_id),
+        0, RPAD(trim(PCC.TAX_RATE), 6, ' '),  --CR24062704
+        RPAD(trim('TX2'), 6, ' ')             --CR24062704
+    ) TAX_CODE
 FROM fy_tb_bl_bill_cntrl bc,
      FY_TB_BL_BILL_MAST MAST, 
      FET1_CUSTOMER_CREDIT CC, 
@@ -62,7 +72,17 @@ SELECT
     RPAD(trim(CC.L9_SERVICE_RECEIVER_TYPE),1,' ') L9_SERVICE_RECEIVER_TYPE, 
     RPAD(trim(CC.L9_SERVICE_RECEIVER_ID),12,' ') L9_SERVICE_RECEIVER_ID, 
     RPAD(trim(DECODE(NVL(CC.INVOICE_ID,0),0,CC.TRANSACTION_ID,CC.INVOICE_ID)),12,' ') INVOICE_ID, 
-    RPAD(trim(PCC.TAX_RATE),6,' ') TAX_CODE
+    --RPAD(trim(PCC.TAX_RATE),6,' ') TAX_CODE 
+        DECODE(
+        (SELECT COUNT(*) 
+         FROM fy_Tb_cm_attribute_param 
+         WHERE entity_type = 'A' 
+           AND attribute_name = 'CHANGE_ZERO_TAX' 
+           AND attribute_value = 'Y'
+           AND entity_id = mast.acct_id),
+        0, RPAD(trim(PCC.TAX_RATE), 6, ' '),  --CR24062704
+        RPAD(trim('TX2'), 6, ' ')             --CR24062704
+    ) TAX_CODE
 FROM fy_tb_bl_bill_cntrl bc,
      FY_TB_BL_BILL_MAST_TEST MAST, 
      FET1_CUSTOMER_CREDIT CC, 

@@ -67,4 +67,3 @@ AND ((999 <> ${processNo} AND EXISTS (SELECT 1 FROM FY_TB_BL_BILL_ACCT
                                             AND ACCT_ID   = MAST.ACCT_ID)))
 AND S.ACCT_ID=MAST.ACCT_ID
 AND MAST.ACCT_ID BETWEEN ${acctIds} and ${acctIde}
-

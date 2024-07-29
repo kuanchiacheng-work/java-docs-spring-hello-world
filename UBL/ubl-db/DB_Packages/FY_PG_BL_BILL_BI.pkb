@@ -850,7 +850,7 @@ CREATE OR REPLACE PACKAGE BODY FY_PG_BL_BILL_BI IS
           CH_TAX_RATE :=CH_TAX_RATE;
           NU_RATE_TAX :=NU_RATE_TAX;
       END;
-      
+
       --TAX_RATE --2021/04/29 MODIFY FOR SR237202_AWS在HGB 設定美金零稅率(特殊專案設定)
       BEGIN
       --    SELECT CH1
