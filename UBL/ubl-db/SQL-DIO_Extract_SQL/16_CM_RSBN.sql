@@ -31,6 +31,8 @@ AND ((999 <> ${processNo} AND EXISTS (SELECT 1 FROM FY_TB_BL_BILL_ACCT
                                             AND TYPE      = ${acctGroup}
                                             AND ACCT_ID   = MAST.ACCT_ID)))
 AND S.ACCT_ID=MAST.ACCT_ID
+and (( bc.cycle=50 and bc.create_user='UBL' and s.subscr_type='I') --SR261173 2024/08/08
+                   or (mast.cycle <> 50) or ( bc.cycle=50 and bc.create_user <>'UBL' ))
 AND MAST.ACCT_ID BETWEEN ${acctIds} and ${acctIde}
 UNION
 SELECT
@@ -66,4 +68,6 @@ AND ((999 <> ${processNo} AND EXISTS (SELECT 1 FROM FY_TB_BL_BILL_ACCT
                                             AND TYPE      = ${acctGroup}
                                             AND ACCT_ID   = MAST.ACCT_ID)))
 AND S.ACCT_ID=MAST.ACCT_ID
+and (( bc.cycle=50 and bc.create_user='UBL' and s.subscr_type='I') --SR261173 2024/08/08
+                   or (mast.cycle <> 50) or ( bc.cycle=50 and bc.create_user <>'UBL' ))
 AND MAST.ACCT_ID BETWEEN ${acctIds} and ${acctIde}
