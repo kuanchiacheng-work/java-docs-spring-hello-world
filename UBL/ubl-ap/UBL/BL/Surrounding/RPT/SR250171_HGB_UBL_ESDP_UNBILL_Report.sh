@@ -18,6 +18,9 @@
 # Date : 2023/04/24 Modify by Mike Kuan
 # Description : SR260229_Project-M Fixed line Phase I_新增CYCLE(15,20)
 ########################################################################################
+# Date : 2024/10/28 Modify by Mike Kuan
+# Description : 修改estimate_costs為0
+########################################################################################
 
 export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
 progName=$(basename $0 .sh)
@@ -340,67 +343,7 @@ SELECT    subscr.cust_id
              ELSE 30             ---(bi.chrg_from_date - cntrl.bill_from_date)
           END
        || ';'
-       || ROUND
-             (  (  (bi.amount - bi.tax_amt)
-                 / (  TO_DATE
-                         (DECODE
-                               (bi.charge_org,
-                                'RA', REGEXP_SUBSTR
-                                               (bi.dynamic_attribute,
-                                                '.*Last_Event_Date=([^#]*).*',
-                                                1,
-                                                1,
-                                                NULL,
-                                                1
-                                               ),
-                                NVL (TO_CHAR (bi.chrg_end_date, 'yyyy/mm/dd'),
-                                     TO_CHAR (cntrl.bill_end_date,
-                                              'yyyy/mm/dd'
-                                             )
-                                    )
-                               ),
-                          'yyyy/mm/dd'
-                         )
-                    - TO_DATE
-                         (DECODE
-                              (bi.charge_org,
-                               'RA', REGEXP_SUBSTR
-                                              (bi.dynamic_attribute,
-                                               '.*First_Event_Date=([^#]*).*',
-                                               1,
-                                               1,
-                                               NULL,
-                                               1
-                                              ),
-                               NVL (TO_CHAR (bi.chrg_from_date, 'yyyy/mm/dd'),
-                                    TO_CHAR (cntrl.bill_from_date,
-                                             'yyyy/mm/dd'
-                                            )
-                                   )
-                              ),
-                          'yyyy/mm/dd'
-                         )
-                    + 1
-                   )       --* (cntrl.bill_end_date - cntrl.bill_end_date + 1)
-                )
-              * CASE
-                   WHEN pkg.end_date IS NOT NULL
-                      THEN (pkg.end_date - 1 - bi.chrg_end_date)
-                   WHEN (SUBSTR (TO_CHAR (cntrl.bill_end_date, 'yyyymmdd'),
-                                 5,
-                                 2
-                                )
-                        ) IN ('01', '03', '05', '07', '08', '10', '12')
-                      THEN 31    ---(bi.chrg_from_date - cntrl.bill_from_date)
-                   WHEN (SUBSTR (TO_CHAR (cntrl.bill_end_date, 'yyyymmdd'),
-                                 5,
-                                 2
-                                )
-                        ) IN ('02')
-                      THEN 28    ---(bi.chrg_from_date - cntrl.bill_from_date)
-                   ELSE 30       ---(bi.chrg_from_date - cntrl.bill_from_date)
-                END
-             )
+       || 0
   FROM fy_tb_bl_bill_bi bi,
        fy_tb_bl_acct_pkg pkg,
        fy_tb_bl_bill_mast mast,
