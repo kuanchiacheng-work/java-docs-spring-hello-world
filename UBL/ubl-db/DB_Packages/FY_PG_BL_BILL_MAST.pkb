@@ -927,6 +927,9 @@ CREATE OR REPLACE PACKAGE BODY FY_PG_BL_BILL_MAST IS
            IF PI_TOT_AMT >0 THEN
               CH_INVOICE_TYPE := 'N';
               CH_INVOICE_DTL  := 'D';
+           ELSIF PI_PERM_PRINTING_CAT='X' AND PI_TOT_AMT < 0 AND (PI_PAID_AMT <> 0 OR PI_CHRG_AMT <> 0) AND PI_CUSTOMER_TYPE = 'D' THEN --SR276005_SKIP BILL Rule調整--新增末帳+N溢繳款通知
+              CH_INVOICE_TYPE := 'N';
+              CH_INVOICE_DTL  := 'E';
            ELSE
               --本期有使用BDE預繳金額
               SELECT COUNT(1)

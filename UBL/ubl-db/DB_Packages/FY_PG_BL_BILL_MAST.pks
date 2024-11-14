@@ -28,6 +28,7 @@ CREATE OR REPLACE PACKAGE FY_PG_BL_BILL_MAST IS
       --             4.3    2022/02/08 MODIFY SR246834 SDWAN_NPEP solution建置_修改NU_LOW_AMT判斷條件
       --             4.4    2023/03/13 MODIFY FOR SR257682_SKIP BILL Rule調整--移除調帳判斷
       --             5.0    2023/04/18 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增CUST_TYPE='P'
+      --             5.1    2024/10/22 MODIFY FOR SR276005_SKIP BILL Rule調整--新增末帳+N溢繳款通知
    */
 
    /*************************************************************************

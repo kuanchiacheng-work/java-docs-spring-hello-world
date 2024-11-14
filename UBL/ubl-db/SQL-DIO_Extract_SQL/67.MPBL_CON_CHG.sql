@@ -36,7 +36,8 @@ CASE
                instrb(bi.dynamic_attribute,'TX_ID',1,1), 1)-1
               )  
   WHEN BI.CHARGE_ORG = 'DE' AND BI.CHARGE_TYPE = 'DSC'
-   THEN (SELECT to_char(ORG.CI_SEQ) FROM FY_TB_BL_BILL_CI CI,
+   --THEN (SELECT to_char(ORG.CI_SEQ) FROM FY_TB_BL_BILL_CI CI,
+   THEN (SELECT decode(org.source,'UC',to_char(org.txn_id),to_char(ORG.CI_SEQ)) FROM FY_TB_BL_BILL_CI CI, --20241023修正UC折扣TXNID不一致
                                               FY_TB_BL_BILL_CI ORG
                                       WHERE CI.CI_SEQ =BI.CI_SEQ
                                         and ci.cycle=bi.cycle and ci.cycle_month=bi.cycle_month and ci.acct_key=bi.acct_key
