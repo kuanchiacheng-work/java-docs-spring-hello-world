@@ -1128,7 +1128,7 @@ CREATE OR REPLACE PACKAGE BODY HGBBLAPPO.FY_PG_BL_BILL_CI IS
 
          --GET RC_PACKAGE
          --IF NU_PKG_ID IS NULL OR NU_PKG_ID<>R_RC.PKG_ID THEN
-         IF NU_PKG_ID IS NULL OR NU_PKG_ID<>R_RC.PKG_ID OR gnCYCLE IN ('10','15','20') THEN --2022/11/14 MODIFY FOR SR250171_ESDP_Migration_Project_HGBN先開放讓每個pkg都抓取初始值，避免無overwrite時發生錯誤金額計算 --2023/04/18 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增CYCLE(15,20)
+         IF NU_PKG_ID IS NULL OR NU_PKG_ID<>R_RC.PKG_ID OR gnCYCLE IN ('10','15','20') OR (gnCYCLE = '50' AND gvUSER='UBL') THEN --2022/11/14 MODIFY FOR SR250171_ESDP_Migration_Project_HGBN先開放讓每個pkg都抓取初始值，避免無overwrite時發生錯誤金額計算 --2023/04/18 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增CYCLE(15,20) --2024/11/21 MODIFY FOR SR261173_#5385 Home grown CMP project -Phase1，增加IoT每個pkg都重新抓取初始值
             NU_PKG_ID := R_RC.PKG_ID;
             gvSTEP := 'GET PBK_PKG_RC.PKG_ID='||TO_CHAR(R_RC.PKG_ID)||':';
             OPEN C_PP(R_RC.PKG_ID);
