@@ -27,6 +27,7 @@ CREATE OR REPLACE PACKAGE FY_PG_BL_BILL_BI IS
       --             5.0    2023/04/18 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增CYCLE(15,20)
       --             5.1    2023/04/20 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增電信業者轉換稅率功能
       --             5.2    2024/07/30 MODIFY FOR SR261173_#5385 Home grown CMP project -Phase1，修改折扣group條件
+      --             5.3    2024/12/03 MODIFY FOR SR273784_[6240]_Project M Fixed Line Phase II 整合專案，增加稅率轉換FOREIGN_REMITTANCE條件
    */
    
    ----------------------------------------------------------------------------------------------------

@@ -957,7 +957,17 @@ CREATE OR REPLACE PACKAGE BODY FY_PG_BL_BILL_BI IS
       --
       --2023/04/20 MODIFY FOR SR260229_Project-M Fixed line Phase I，新增電信業者轉換稅率功能
       BEGIN
-        IF PI_CHARGE_CODE LIKE '%_TAX' THEN --need change to charge_code ('%_TAX')
+        IF gnCYCLE IN ('10','15','20') THEN --2024/12/03 MODIFY FOR SR273784_[6240]_Project M Fixed Line Phase II 整合專案，增加稅率轉換FOREIGN_REMITTANCE條件
+          SELECT count(entity_id)
+          INTO NU_ACCOUNT
+            FROM fy_tb_cm_attribute_param
+           WHERE entity_type = 'A'
+           AND entity_id = gnACCT_ID
+           AND attribute_name = 'FOREIGN_REMITTANCE'
+           AND attribute_value = 'Y';
+        END IF;
+	  
+        IF PI_CHARGE_CODE LIKE '%_TAX' AND NU_ACCOUNT > 0 THEN --need change to charge_code ('%_TAX') --2024/12/03 MODIFY FOR SR273784_[6240]_Project M Fixed Line Phase II 整合專案，增加稅率轉換FOREIGN_REMITTANCE條件
                      DBMS_OUTPUT.Put_Line(' 2TAX_RATE='||TO_CHAR(CH_TAX_RATE)||' 2RATE_TAX='||TO_CHAR(NU_RATE_TAX));
             --SELECT DECODE (elem5, 21, DECODE (CH_TAX_RATE, 'TX1', 'TX2', 'TX1'), CH_TAX_RATE) TAX_RATE,DECODE (elem5, 21, DECODE (NU_RATE_TAX, 0, 5, 0), NU_RATE_TAX) RATE_TAX
             SELECT DECODE (elem5, 0, DECODE(CH_TAX_RATE, 'TX2', 'TX1', 'TX1', 'TX2', CH_TAX_RATE), 21, DECODE (CH_TAX_RATE, 'TX2', 'TX1', 'TX1', 'TX2', CH_TAX_RATE), CH_TAX_RATE) TAX_RATE,DECODE (elem5, 0, DECODE (NU_RATE_TAX, 0, 5, 5, 0, NU_RATE_TAX), 21, DECODE (NU_RATE_TAX, 0, 5, 5, 0, NU_RATE_TAX), NU_RATE_TAX) RATE_TAX
@@ -971,6 +981,7 @@ CREATE OR REPLACE PACKAGE BODY FY_PG_BL_BILL_BI IS
       EXCEPTION WHEN OTHERS THEN
           CH_TAX_RATE :=CH_TAX_RATE;
           NU_RATE_TAX :=NU_RATE_TAX;
+		  NU_ACCOUNT :=0;
       END;
 
       --TAX_RATE --2021/04/29 MODIFY FOR SR237202_AWS在HGB 設定美金零稅率(特殊專案設定)
