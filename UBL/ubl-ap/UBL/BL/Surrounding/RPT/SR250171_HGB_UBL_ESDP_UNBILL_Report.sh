@@ -1460,10 +1460,10 @@ rm ${reportFileName}.dat
 sleep 5
 grep -v '^$' ${reportFileName2}.dat > ${ReportDir}/${reportFileName2}.csv
 rm ${reportFileName2}.dat
-}
+sleep 5
 grep -v '^$' ${reportFileName3}.dat > ${ReportDir}/${reportFileName3}.csv
 rm ${reportFileName3}.dat
-}
+sleep 5
 grep -v '^$' ${reportFileName4}.dat > ${ReportDir}/${reportFileName4}.csv
 rm ${reportFileName4}.dat
 }
@@ -1499,7 +1499,6 @@ Dears,
 (請注意：此郵件為系統自動傳送，請勿直接回覆！)
 (Note: Please do not reply to messages sent automatically.)
 EOF
-}
 
 send_msg="<SR250171_HGB_ESDP_UNBILL3_Report> $sysd"
 	#iconv -f utf8 -t big5 -c ${reportFileName}.txt > ${reportFileName}.big5
@@ -1515,7 +1514,6 @@ Dears,
 (請注意：此郵件為系統自動傳送，請勿直接回覆！)
 (Note: Please do not reply to messages sent automatically.)
 EOF
-}
 
 send_msg="<SR250171_HGB_ESDP_UNBILL4_Report> $sysd"
 	#iconv -f utf8 -t big5 -c ${reportFileName}.txt > ${reportFileName}.big5
@@ -1540,38 +1538,6 @@ mailx -s "${send_msg} Gen Data Have Abnormal " ${mailList} <<EOF
 Dear All,
   
   SR250171_HGB_ESDP_UNBILL_Report未產出。
-  
-(請注意：此郵件為系統自動傳送，請勿直接回覆！)
-(Note: Please do not reply to messages sent automatically.)
-EOF
-
-send_msg="<SR250171_HGB_ESDP_UNBILL2_Report> $sysd"
-mailx -s "${send_msg} Gen Data Have Abnormal " ${mailList} <<EOF
-Dear All,
-  
-  SR250171_HGB_ESDP_UNBILL2_Report未產出。
-  
-(請注意：此郵件為系統自動傳送，請勿直接回覆！)
-(Note: Please do not reply to messages sent automatically.)
-EOF
-}
-
-send_msg="<SR250171_HGB_ESDP_UNBILL3_Report> $sysd"
-mailx -s "${send_msg} Gen Data Have Abnormal " ${mailList} <<EOF
-Dear All,
-  
-  SR250171_HGB_ESDP_UNBILL3_Report未產出。
-  
-(請注意：此郵件為系統自動傳送，請勿直接回覆！)
-(Note: Please do not reply to messages sent automatically.)
-EOF
-}
-
-send_msg="<SR250171_HGB_ESDP_UNBILL4_Report> $sysd"
-mailx -s "${send_msg} Gen Data Have Abnormal " ${mailList} <<EOF
-Dear All,
-  
-  SR250171_HGB_ESDP_UNBILL4_Report未產出。
   
 (請注意：此郵件為系統自動傳送，請勿直接回覆！)
 (Note: Please do not reply to messages sent automatically.)
@@ -1602,7 +1568,7 @@ echo "Formatter Report End"|tee -a ${logFile}
 
 
 #check gen report
-filecnt1=`ls ${ReportDir}/${reportFileName}.csv|wc -l`
+filecnt1=`ls ${ReportDir}/${reportFileName4}.csv|wc -l`
 sleep 5
 if [[ (${filecnt1} = 0 ) ]] ; then
 	echo "${progName} Generated Report Have Abnormal"|tee -a ${logFile}
