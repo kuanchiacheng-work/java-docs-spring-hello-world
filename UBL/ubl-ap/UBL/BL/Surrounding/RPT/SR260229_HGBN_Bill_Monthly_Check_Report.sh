@@ -9,7 +9,7 @@
 # Date : 2023/08/22 Created by Mike Kuan
 # Description : 移除CM/RAT
 ########################################################################################
-111
+111222
 export NLS_LANG=AMERICAN_AMERICA.AL32UTF8
 progName=$(basename $0 .sh)
 sysdt=`date +%Y%m%d%H%M%S`
